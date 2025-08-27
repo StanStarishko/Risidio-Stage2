@@ -1,5 +1,5 @@
 // human
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [url, setUrl] = useState('')
@@ -7,6 +7,12 @@ export default function Home() {
   const [reportId, setReportId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [progress, setProgress] = useState(0)
+  const [mounted, setMounted] = useState(false)
+
+  // Fix hydration by only showing client-specific content after mount
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -21,9 +27,14 @@ export default function Home() {
     }, 200)
 
     try {
-      const apiUrl = '/api/audit' // Use relative path for Vercel
+      // Always use relative API path - works in both dev and production
+      const apiUrl = '/api/audit'
       console.log('Making request to:', apiUrl)
       console.log('Request body:', { url })
+      console.log('Environment:', process.env.NODE_ENV)
+      if (mounted) {
+        console.log('Base URL:', window.location.origin)
+      }
 
       const res = await fetch(apiUrl, {
         method: 'POST',
@@ -85,11 +96,14 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Debug Info */}
-        <div className="mb-4 p-2 bg-gray-100 rounded text-xs">
-          <p><strong>Debug:</strong> API endpoint: /api/audit</p>
-          <p><strong>Environment:</strong> {process.env.NODE_ENV || 'development'}</p>
-        </div>
+        {/* Environment Info - Only show in development and after mount */}
+        {process.env.NODE_ENV === 'development' && mounted && (
+          <div className="mb-4 p-2 bg-gray-100 rounded text-xs">
+            <p><strong>Debug:</strong> API endpoint: /api/audit</p>
+            <p><strong>Environment:</strong> {process.env.NODE_ENV || 'development'}</p>
+            <p><strong>Origin:</strong> {window.location.origin}</p>
+          </div>
+        )}
 
         {/* Main Form */}
         <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
@@ -140,10 +154,12 @@ export default function Home() {
               <p className="text-red-600 flex items-center gap-2">
                 ⚠️ <span>{error}</span>
               </p>
-              <details className="mt-2">
-                <summary className="text-xs text-red-500 cursor-pointer">Debug details</summary>
-                <pre className="text-xs mt-1 text-red-400 whitespace-pre-wrap">{error}</pre>
-              </details>
+              {process.env.NODE_ENV === 'development' && mounted && (
+                <details className="mt-2">
+                  <summary className="text-xs text-red-500 cursor-pointer">Debug details</summary>
+                  <pre className="text-xs mt-1 text-red-400 whitespace-pre-wrap">{error}</pre>
+                </details>
+              )}
             </div>
           )}
 
