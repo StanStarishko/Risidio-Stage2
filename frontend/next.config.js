@@ -1,10 +1,10 @@
-// human
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  
-  // API configuration for CORS
+  experimental: { externalDir: true },
+
+  // Optional: response headers for API paths served by Next
   async headers() {
     return [
       {
@@ -12,11 +12,11 @@ const nextConfig = {
         headers: [
           { key: 'Access-Control-Allow-Origin', value: '*' },
           { key: 'Access-Control-Allow-Methods', value: 'GET, POST, PUT, DELETE, OPTIONS' },
-          { key: 'Access-Control-Allow-Headers', value: 'Content-Type, Authorization' },
-        ],
-      },
-    ]
-  },
-}
+          { key: 'Access-Control-Allow-Headers', value: 'Content-Type, Authorization' }
+        ]
+      }
+    ];
+  }
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

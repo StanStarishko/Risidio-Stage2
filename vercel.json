@@ -5,16 +5,9 @@
     { "src": "frontend/next.config.js", "use": "@vercel/next" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/frontend/$1" }
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/frontend" }
   ],
-  "functions": {
-    "frontend/pages/api/audit.ts": {
-      "maxDuration": 30
-    },
-    "frontend/pages/api/test.ts": {
-      "maxDuration": 10  
-    }
-  },
   "env": {
     "NODE_ENV": "production"
   }
