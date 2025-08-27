@@ -6,7 +6,7 @@ const app = express()
 
 // Explicit CORS to avoid "Failed to fetch"
 app.use(cors({
-  origin: ['http://localhost:3000'],
+  origin: ['/api/audit'],
   credentials: true,
 }))
 app.use(express.json())
