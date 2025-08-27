@@ -21,13 +21,30 @@ export default function Home() {
     }, 200)
 
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:4000/audit', {
+      const apiUrl = '/api/audit' // Use relative path for Vercel
+      console.log('Making request to:', apiUrl)
+      console.log('Request body:', { url })
+
+      const res = await fetch(apiUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify({ url }),
       })
+
+      console.log('Response status:', res.status)
+      console.log('Response headers:', Object.fromEntries(res.headers.entries()))
+
+      if (!res.ok) {
+        const errorText = await res.text()
+        console.error('Error response:', errorText)
+        throw new Error(`HTTP ${res.status}: ${errorText}`)
+      }
+
       const data = await res.json()
-      if (!res.ok) throw new Error(data?.message || 'Audit failed')
+      console.log('Success response:', data)
       
       setProgress(100)
       setTimeout(() => {
@@ -35,7 +52,8 @@ export default function Home() {
         clearInterval(progressInterval)
       }, 500)
     } catch (err: any) {
-      setError(err.message)
+      console.error('Fetch error:', err)
+      setError(err.message || 'Audit failed')
       clearInterval(progressInterval)
       setProgress(0)
     } finally {
@@ -65,6 +83,12 @@ export default function Home() {
               📊 <span>Performance Insights</span>
             </span>
           </div>
+        </div>
+
+        {/* Debug Info */}
+        <div className="mb-4 p-2 bg-gray-100 rounded text-xs">
+          <p><strong>Debug:</strong> API endpoint: /api/audit</p>
+          <p><strong>Environment:</strong> {process.env.NODE_ENV || 'development'}</p>
         </div>
 
         {/* Main Form */}
@@ -116,6 +140,10 @@ export default function Home() {
               <p className="text-red-600 flex items-center gap-2">
                 ⚠️ <span>{error}</span>
               </p>
+              <details className="mt-2">
+                <summary className="text-xs text-red-500 cursor-pointer">Debug details</summary>
+                <pre className="text-xs mt-1 text-red-400 whitespace-pre-wrap">{error}</pre>
+              </details>
             </div>
           )}
 

@@ -64,7 +64,7 @@ export default function Report() {
   const router = useRouter()
   const { id } = router.query
   const { data, error } = useSWR(
-    id ? (process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:4000') + `/audit/${id}` : null,
+    id ? `/api/audit?id=${id}` : null,
     fetcher
   )
 
@@ -74,6 +74,7 @@ export default function Report() {
         <div className="text-6xl mb-4">❌</div>
         <h1 className="text-2xl font-bold mb-2">Failed to Load Report</h1>
         <p className="text-gray-600">Please check your connection and try again.</p>
+        <p className="text-sm text-gray-400 mt-2">Error: {error.message}</p>
       </div>
     </div>
   )
@@ -82,18 +83,15 @@ export default function Report() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         <div className="animate-spin text-4xl mb-4">⚙️</div>
-        <h1 className="text-xl font-semibold">Analyzing Report...</h1>
+        <h1 className="text-xl font-semibold">Loading Report...</h1>
       </div>
     </div>
   )
 
-  const isStub = typeof data.recommendations?.summary === 'string' &&
-    data.recommendations.summary.toLowerCase().includes('stub')
-
   // Calculate health scores
   const accessibilityScore = Math.max(0, 100 - (data.heuristics?.accessibility?.imagesMissingAlt || 0) * 10)
   const seoScore = (data.heuristics?.seo?.title ? 50 : 0) + (data.heuristics?.seo?.metaDescriptionPresent ? 50 : 0)
-  const overallScore = Math.round((accessibilityScore + seoScore) / 2)
+  const overallScore = data.recommendations?.webScore || Math.round((accessibilityScore + seoScore) / 2)
 
   // Prepare chart data
   const chartData = [
@@ -137,12 +135,10 @@ export default function Report() {
           </div>
         </div>
 
-        {/* Stub Warning */}
-        {isStub && (
-          <div className="mb-6 p-4 border border-yellow-400 bg-yellow-50 rounded-lg flex items-center gap-2">
-            ⚠️ <strong>Demo Mode:</strong> This is a stubbed response. In production, real AI analysis would be provided.
-          </div>
-        )}
+        {/* Demo Notice */}
+        <div className="mb-6 p-4 border border-blue-300 bg-blue-50 rounded-lg flex items-center gap-2">
+          🔍 <strong>Demo Mode:</strong> This report shows mock data to demonstrate the UX audit tool functionality.
+        </div>
 
         {/* Health Scores Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -194,40 +190,28 @@ export default function Report() {
           </div>
         </div>
 
-        {/* Technical Details */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold mb-4">Raw Heuristics Data</h3>
-            <pre className="whitespace-pre-wrap text-sm bg-gray-50 p-4 rounded overflow-auto max-h-64">
-              {JSON.stringify(data.heuristics, null, 2)}
-            </pre>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold mb-4">AI Response Data</h3>
-            <pre className="whitespace-pre-wrap text-sm bg-gray-50 p-4 rounded overflow-auto max-h-64">
-              {JSON.stringify(data.recommendations, null, 2)}
-            </pre>
-          </div>
-        </div>
-
         {/* Web3 Integration - Future DAO Voting */}
         <div className="mt-8 bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border">
           <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
-            🔗 Web3 Integration (Coming Soon)
+            🔗 Web3 Integration (Demo)
           </h3>
           <p className="text-gray-700 mb-4">
-            This report will be stored on blockchain for immutable audit trail. 
-            Community DAO voting will help prioritize recommendation improvements.
+            This report demonstrates blockchain verification and DAO voting concepts. 
+            In production, reports would be immutably stored and community-validated.
           </p>
           <div className="flex gap-4">
             <button className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg text-sm hover:bg-blue-200">
-              📝 Mint Report NFT
+              📝 Mint Report NFT (Demo)
             </button>
             <button className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg text-sm hover:bg-purple-200">
-              🗳️ Submit to DAO Review
+              🗳️ Submit to DAO Review (Demo)
             </button>
           </div>
+          {data.recommendations?.blockchain && (
+            <div className="mt-4 p-3 bg-white rounded border text-xs">
+              <strong>Blockchain Hash:</strong> {data.recommendations.blockchain.hash}
+            </div>
+          )}
         </div>
       </div>
     </main>
