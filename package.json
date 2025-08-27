@@ -1,0 +1,16 @@
+{
+  "name": "ai-ux-audit-tool",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "scripts": {
+    "dev": "npm -w frontend run dev & npm -w backend run dev",
+    "build": "npm -w frontend run build && npm -w backend run build",
+    "start": "npm -w backend run start"
+  }
+}
