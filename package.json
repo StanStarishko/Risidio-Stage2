@@ -1,16 +1,47 @@
 {
   "name": "ai-ux-audit-tool",
+  "version": "1.2.0",
+  "description": "AI-powered UX audit tool with Web3 integration for Lunim Studio",
   "private": true,
   "workspaces": [
     "frontend",
     "backend"
   ],
   "engines": {
-    "node": ">=18.18.0"
+    "node": ">=18.18.0",
+    "npm": ">=8.0.0"
   },
   "scripts": {
-    "dev": "npm -w frontend run dev & npm -w backend run dev",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "npm -w frontend run dev",
+    "dev:backend": "npm -w backend run dev",
     "build": "npm -w frontend run build && npm -w backend run build",
-    "start": "npm -w backend run start"
+    "start": "npm -w backend run start",
+    "test": "npm -w frontend run test && npm -w backend run test",
+    "lint": "npm -w frontend run lint && npm -w backend run lint",
+    "clean": "rm -rf frontend/.next backend/dist node_modules/*/node_modules",
+    "install:all": "npm install && npm -w frontend install && npm -w backend install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StanStarishko/Portfolio/"
+  },
+  "keywords": [
+    "ux-audit",
+    "ai",
+    "accessibility",
+    "web3",
+    "blockchain",
+    "ui-analysis",
+    "user-experience"
+  ],
+  "author": {
+    "name": "Stanislav Starishko",
+    "email": "slavkost73@gmail.com",
+    "url": "https://github.com/StanStarishko"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
