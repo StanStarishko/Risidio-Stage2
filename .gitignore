@@ -1,4 +1,5 @@
 # Node/Next.js
+frontend/.next/
 node_modules/
 .next/
 out/
