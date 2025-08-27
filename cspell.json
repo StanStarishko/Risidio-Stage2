@@ -1,0 +1,35 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "Lunim",
+    "Stanislav", 
+    "Starishko",
+    "slavkost",
+    "Risidio",
+    "analyzeDom",
+    "heuristics",
+    "WCAG",
+    "blockchain",
+    "NFTs",
+    "dApps",
+    "tokenized",
+    "immutable",
+    "timestamping"
+  ],
+  "ignoreWords": [
+    "Gmail",
+    "LinkedIn", 
+    "GitHub",
+    "Next.js",
+    "TypeScript",
+    "Tailwind"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    ".next/**",
+    "dist/**",
+    "*.json",
+    "package-lock.json"
+  ]
+}
