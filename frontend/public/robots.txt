@@ -1,17 +1,2 @@
-Create these files in frontend/public/:
-
-1. favicon.ico - any small icon file (16x16 pixels)
-2. robots.txt with content:
 User-agent: *
 Allow: /
-
-3. manifest.json with content:
-{
-  "name": "AI-powered UX Audit Tool",
-  "short_name": "UX Audit",
-  "description": "Generate instant UX & accessibility insights for any website using AI analysis",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000"
-}
