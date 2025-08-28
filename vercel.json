@@ -8,8 +8,30 @@
     }
   ],
   "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/frontend/$1" }
+    {
+      "src": "/api/(.*)",
+      "dest": "/frontend/api/$1"
+    },
+    {
+      "src": "/_next/(.*)",
+      "dest": "/frontend/_next/$1"
+    },
+    {
+      "src": "/favicon\\.(ico|svg)",
+      "dest": "/frontend/favicon.$1"
+    },
+    {
+      "src": "/robots\\.txt",
+      "dest": "/frontend/robots.txt"
+    },
+    {
+      "src": "/manifest\\.json",
+      "dest": "/frontend/manifest.json"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/$1"
+    }
   ],
   "env": {
     "NODE_ENV": "production"
