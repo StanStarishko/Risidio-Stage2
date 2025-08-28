@@ -1,1 +1,7 @@
-module.exports = { plugins: { tailwindcss: {}, autoprefixer: {}, }, };
+// human
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}

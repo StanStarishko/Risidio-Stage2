@@ -12,15 +12,10 @@
     "npm": ">=8.0.0"
   },
   "scripts": {
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:frontend": "npm -w frontend run dev",
-    "dev:backend": "npm -w backend run dev",
-    "build": "npm -w frontend run build && npm -w backend run build",
-    "start": "npm -w backend run start",
-    "test": "npm -w frontend run test && npm -w backend run test",
-    "lint": "npm -w frontend run lint && npm -w backend run lint",
-    "clean": "rm -rf frontend/.next backend/dist node_modules/*/node_modules",
-    "install:all": "npm install && npm -w frontend install && npm -w backend install"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "repository": {
     "type": "git",
@@ -42,6 +37,18 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "@types/node": "^20.5.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.15",
+    "postcss": "^8.4.29",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "next": "^14.2.32",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "swr": "^2.2.0"
   }
 }
