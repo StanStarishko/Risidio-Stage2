@@ -1,23 +1,83 @@
-# Node/Next.js
-frontend/.next/
+# ========== OS / Editors ==========
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ========== Package managers ==========
 node_modules/
-.next/
-out/
-dist/
-.build/
-.turbo/
-coverage/
+**/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
+.pnp/
+.pnp.js
+.pnpm-store/
 
-# Env & misc
+# ========== Env files ==========
+# keep .env.example and similar tracked
 .env
-.env.*
-*.local
-.DS_Store
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Editor/OS
-.vscode/
-.idea/
+# ========== Vercel / Deploy ==========
+.vercel/
+**/.vercel/
+
+# ========== Next.js ==========
+.next/
+**/.next/
+out/
+**/out/
+.eslintcache
+**/.eslintcache
+
+# ========== Build outputs / caches ==========
+dist/
+**/dist/
+build/
+**/build/
+.build/
+.turbo/
+**/.turbo/
+.cache/
+**/.cache/
+*.tsbuildinfo
+*.tsbuildinfo.tmp
+*.tgz
+
+# ========== CSS / Bundlers ==========
+# Tailwind/PostCSS caches (if any appear)
+.postcss-cache/
+# Vite
+.vite/
+**/.vite/
+# Parcel
+.parcel-cache/
+
+# ========== Tests / Coverage ==========
+coverage/
+**/coverage/
+.nyc_output/
+cypress/screenshots/
+cypress/videos/
+playwright-report/
+test-results/
+junit.xml
+
+# ========== Storybook ==========
+storybook-static/
+.out/
+*.storybook-cache/
+
+# ========== Misc ==========
+logs/
+**/logs/
+*.log
