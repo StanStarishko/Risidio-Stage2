@@ -29,7 +29,7 @@ open http://localhost:3000
 
 ## 📊 Live Demo
 
-**[🔗 View Live Demo on Vercel](#)** *(Link will be updated after deployment)*
+**[🔗 View Live Demo on Vercel](#)** *(https://risidio-stage2.vercel.app/)*
 
 Try it out:
 1. Enter any website URL (e.g., `https://studio.lunim.io`)
